@@ -137,8 +137,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TourController.cs" />
     <Compile Include="CostCalculator.cs" />
-    <Compile Include="DAO\DBConnect.cs" />
-    <Compile Include="DAO\EnquiryTourLeadCostRepository.cs" />
+    <Compile Include="TourReservationSysDB\DBConnect.cs" />
+    <Compile Include="TourReservationSysDB\EnquiryTourLeadCostRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
