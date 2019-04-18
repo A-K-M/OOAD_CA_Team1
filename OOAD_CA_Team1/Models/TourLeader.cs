@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OOAD_CA_Team1.Models
 {
-    public class Tourleaders
+    public class TourLeader
     {
         public int TourleaderId {get; set;}
         public string Name { get; set; }

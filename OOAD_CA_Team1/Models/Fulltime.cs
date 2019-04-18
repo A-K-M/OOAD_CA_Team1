@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OOAD_CA_Team1.Models
 {
-    public class Fulltime : Tourleaders
+    public class Fulltime : TourLeader
     {
         public double Salary { get; set; }
         public string LeaveEntitled { get; set; }
