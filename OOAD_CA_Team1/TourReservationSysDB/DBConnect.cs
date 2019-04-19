@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 
-namespace OOAD_CA_Team1.DAO
+namespace OOAD_CA_Team1.TourReservationSysDB
 {
     public class DBConnect
     {

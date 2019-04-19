@@ -44,6 +44,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -126,16 +133,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\TourLeadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TourController.cs" />
-    <Compile Include="DAO\DBConnect.cs" />
-    <Compile Include="DAO\TourDAO.cs" />
+    <Compile Include="CostCalculator.cs" />
+    <Compile Include="TourReservationSysDB\DBConnect.cs" />
+    <Compile Include="TourReservationSysDB\EnquiryTourLeadCostRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\EnquiryTourLeadViewModel.cs" />
+    <Compile Include="ViewModels\EnquiryTourLeadViewModel_Old.cs" />
     <Compile Include="Models\Fulltime.cs" />
     <Compile Include="Models\Parttime.cs" />
-    <Compile Include="Models\Tourleaders.cs" />
+    <Compile Include="Models\TourLeader.cs" />
     <Compile Include="Models\Tours.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -175,11 +186,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Tour\TourList.cshtml" />
-    <Content Include="Views\Tour\AssignTourLeader.cshtml" />
+    <Content Include="Views\TourLead\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Tour\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
