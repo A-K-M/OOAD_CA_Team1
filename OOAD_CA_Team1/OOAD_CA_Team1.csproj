@@ -129,6 +129,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TourController.cs" />
     <Compile Include="DAO\DBConnect.cs" />
+    <Compile Include="DAO\TourDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,10 +175,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Tour\TourList.cshtml" />
+    <Content Include="Views\Tour\AssignTourLeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Tour\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

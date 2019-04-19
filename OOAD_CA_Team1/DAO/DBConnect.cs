@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 
 namespace OOAD_CA_Team1.DAO
 {
@@ -14,9 +15,8 @@ namespace OOAD_CA_Team1.DAO
 
         public DBConnect()
         {
-            cn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["OOAD_CA_ConnString"].ConnectionString);
+            cn = new SqlConnection(ConfigurationManager.ConnectionStrings["OOAD_CA_ConnString"].ConnectionString);
         }
-
         public int SetData(SqlCommand cmd)
         {
             if (cn.State == ConnectionState.Closed) cn.Open();
@@ -25,7 +25,6 @@ namespace OOAD_CA_Team1.DAO
             if (cn.State == ConnectionState.Open) cn.Close();
             return rowsAffected;
         }
-
         public DataTable GetData(SqlCommand cmd)
         {
             DataTable t1 = new DataTable();

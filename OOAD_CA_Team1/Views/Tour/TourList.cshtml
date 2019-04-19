@@ -1,0 +1,93 @@
+﻿@model IEnumerable<OOAD_CA_Team1.Models.Tours>
+
+@{
+    ViewBag.Title = "TourList";
+}
+
+<h2>TourList</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TourId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourPackageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinPassenger)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxPassenger)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourLeaderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourLeaderCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourPackageName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinPassenger)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxPassenger)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.TourLeaderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourLeaderCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            @Html.ActionLink("Assign Leader", "AssignTourLeader", new { id=item.TourId })
+        </td>
+    </tr>
+}
+
+</table>

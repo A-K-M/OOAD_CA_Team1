@@ -1,0 +1,105 @@
+﻿@model OOAD_CA_Team1.Models.Tours
+
+
+@{
+    ViewBag.Title = "AssignTourLeader";
+    int tid = ViewBag.tid;
+    
+}
+<h2>AssignTourLeader</h2>
+<div>
+    <h4>Tours</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TourId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourLeaderCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourLeaderCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinPassenger)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinPassenger)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxPassenger)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxPassenger)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourPackageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TourPackageName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourLeaderName)
+        </dt>
+        @using (Html.BeginForm("AssignLeader", "Tour", FormMethod.Post))
+        {
+        <dd>
+            @Html.DropDownList("TourLeader", new SelectList(ViewBag.tl_list, "TourLeaderID", "Name"), "Select TourLeader")
+            @*@foreach (var leader in ViewBag.tl_list)
+            {
+            }*@
+            <input type="submit" name="AssignLeader" value="Assign Leader" class="btn-link" formaction="/Tour/AssignLeader?tid=@tid" />
+
+        </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
