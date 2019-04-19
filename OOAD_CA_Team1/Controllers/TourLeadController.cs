@@ -1,4 +1,4 @@
-﻿using OOAD_CA_Team1.DAO;
+﻿using OOAD_CA_Team1.TourReservationSysDB;
 using OOAD_CA_Team1.Models;
 using OOAD_CA_Team1.ViewModels;
 using System;
@@ -10,9 +10,8 @@ using System.Web.Mvc;
 
 namespace OOAD_CA_Team1.Controllers
 {
-    public class EnquiryTourLeadCostController : Controller
+    public class TourLeadController : Controller
     {
-        // GET: EnquiryTourLeadCost
         public ActionResult Index()
         {
             ModelState.Clear();
@@ -29,7 +28,15 @@ namespace OOAD_CA_Team1.Controllers
                 return View(vm);
             }
 
-            var cost = CostCalculator.CalculateTourLeadCost(vm.SelectedTourLead, Convert.ToInt32(vm.NoOfDays));
+            double cost = 0.0;
+            try
+            {
+                cost = CostCalculator.CalculateTourLeadCost(vm.SelectedTourLead, Convert.ToInt32(vm.NoOfDays));
+            }
+            catch (Exception)
+            {
+                TempData["msg"] = "<script>alert('Sorry! Fail to calculate cost. Please try again.');</script>";
+            }
 
             ConfigureViewModel(vm);
             ViewBag.Cost = cost;
@@ -40,6 +47,11 @@ namespace OOAD_CA_Team1.Controllers
         {
             var repo = new EnquiryTourLeadCostRepository();
             IEnumerable<TourLeader> tourLeads = repo.GetTourLeads();
+            foreach(var lead in tourLeads)
+            {
+                var idAndName = $"{lead.Name} (ID: {lead.TourleaderId})";
+                lead.Name = idAndName;
+            }
             vm.TourLeads = new SelectList(tourLeads, "TourleaderId", "Name");
         }
     }

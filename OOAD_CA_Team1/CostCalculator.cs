@@ -1,4 +1,5 @@
-﻿using OOAD_CA_Team1.DAO;
+﻿using OOAD_CA_Team1.TourReservationSysDB;
+using OOAD_CA_Team1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,27 @@ namespace OOAD_CA_Team1
     {
         public static double CalculateTourLeadCost(int tourLeadId, int days)
         {
-            double cost = 0;
+            double cost = 0.0;
             var repo = new EnquiryTourLeadCostRepository();
             var fullTimeLeads = repo.GetFullTimeLeads();
             var partTimeLeads = repo.GetPartTimeLeads();
 
-            if (fullTimeLeads.Exists(l => l.TourleaderId == tourLeadId))
+            if (GetTourLeadType(fullTimeLeads, tourLeadId) == TourLeadType.FullTime)
             {
-                cost = CalcCost(fullTimeLeads.SingleOrDefault(l => l.TourleaderId == tourLeadId).Salary, days);
+                var tourLeadRank = fullTimeLeads.Find(l => l.TourleaderId == tourLeadId).Rank;   // GetTourLeadRank
+                double dailyRate = 0.0;
+                switch (tourLeadRank)
+                {
+                    case "M1":
+                        dailyRate = 500.0; break;
+                    case "M2":
+                        dailyRate = 400.0; break;
+                    case "M3":
+                        dailyRate = 300.0; break;
+                    default:
+                        break;
+                }
+                cost = CalcCost(dailyRate, days);
             }
             else
             {
@@ -30,5 +44,16 @@ namespace OOAD_CA_Team1
         {
             return dailyRate * days;
         }
+
+        private static TourLeadType GetTourLeadType(List<Fulltime> fullTimeLeads, int tourLeadId)
+        {
+            return fullTimeLeads.Exists(l => l.TourleaderId == tourLeadId) ? TourLeadType.FullTime : TourLeadType.PartTime;
+        }
+    }
+
+    public enum TourLeadType
+    {
+        FullTime,
+        PartTime
     }
 }

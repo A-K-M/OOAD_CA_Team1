@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace OOAD_CA_Team1.DAO
+namespace OOAD_CA_Team1.TourReservationSysDB
 {
     public class EnquiryTourLeadCostRepository
     {

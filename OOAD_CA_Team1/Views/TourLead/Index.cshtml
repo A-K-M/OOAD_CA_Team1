@@ -10,7 +10,7 @@
 {
     <div class="form-group">
         @Html.LabelFor(m => m.NoOfDays)
-        @Html.TextBoxFor(m => m.NoOfDays, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.NoOfDays, new { @class = "form-control", @type = "number", @min = "1" })
         @Html.ValidationMessageFor(m => m.NoOfDays)
     </div>
     <div class="form-group">
@@ -20,6 +20,7 @@
     </div>
 
     <button type="submit" class="btn btn-success submit">Calculate</button>
+    @Html.Raw(TempData["msg"])
 
     <div class="form-group">
         @Html.Label($"Tour Lead Cost:  ${ViewBag.Cost}")
