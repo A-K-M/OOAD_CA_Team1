@@ -93,7 +93,7 @@
             @*@foreach (var leader in ViewBag.tl_list)
             {
             }*@
-            <input type="submit" name="AssignLeader" value="Assign Leader" class="btn-link" formaction="/Tour/AssignLeader?tid=@tid" />
+            <input type="submit" name="AssignLeader" value="Assign Leader" class="btn btn-success" formaction="/Tour/AssignLeader?tid=@tid" />
 
         </dd>
         }
@@ -101,5 +101,5 @@
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
-    @Html.ActionLink("Back to List", "Tourlist")
+    @Html.ActionLink("Back to List", "Tourlist",null,new { @class="btn btn-default"})
 </p>
