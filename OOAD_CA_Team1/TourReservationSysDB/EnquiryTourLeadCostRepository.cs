@@ -142,7 +142,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             DateTime NewEndDate = Convert.ToDateTime(newtour.EndDate);
             if (tours.Count() != 0)
             {
-                foreach (Tour t in tours)
+                foreach (Tour t in tours.Where(x=>x.TourId!=tid))
                 {
                     DateTime OldStartDate = Convert.ToDateTime(t.StartDate);
                     DateTime OldEndDate = Convert.ToDateTime(t.EndDate);

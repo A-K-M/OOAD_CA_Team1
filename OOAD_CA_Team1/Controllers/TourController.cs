@@ -43,7 +43,17 @@ namespace OOAD_CA_Team1.Controllers
                     EnquiryTourLeadCostRepository.AssignTourleader(tid, tl_id);
                 }
             }
-                return RedirectToAction("TourList");
+
+            Tour tourinfo = TourRepository.GetTourDetailsById(tid);
+            List<TourLeader> leader_list = new List<TourLeader>();
+            leader_list = EnquiryTourLeadCostRepository.GetAvailableTourLeaders(tid, tourinfo.TourPackageId);
+
+            ViewBag.tl_list = leader_list;
+            ViewBag.tid = tid;
+            ViewBag.message = "Tour Leader successfully assigned!";
+
+            return View("AssignTourLeader", tourinfo);
+            //return RedirectToAction("TourList");
         }
        
     }

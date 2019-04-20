@@ -4,12 +4,16 @@
 @{
     ViewBag.Title = "AssignTourLeader";
     int tid = ViewBag.tid;
-    
+
 }
 <h2>AssignTourLeader</h2>
 <div>
     <h4>Tours</h4>
     <hr />
+    @if (!String.IsNullOrEmpty(ViewBag.message))
+    {
+    <h5 style="color:green">@ViewBag.message </h5>
+    }
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.TourId)
@@ -43,13 +47,13 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.TourLeaderCost)
-        </dt>
+        </dt>*@
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.TourLeaderCost)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.MinPassenger)
@@ -89,7 +93,7 @@
         @using (Html.BeginForm("AssignLeader", "Tour", FormMethod.Post))
         {
         <dd>
-            @Html.DropDownList("TourLeader", new SelectList(ViewBag.tl_list, "TourLeaderID", "Name"), "Select TourLeader")
+            @Html.DropDownList("TourLeader", new SelectList(ViewBag.tl_list, "TourLeaderID", "Name",Model.TourLeaderId), "Select TourLeader")
             @*@foreach (var leader in ViewBag.tl_list)
             {
             }*@
