@@ -142,12 +142,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="TourReservationSysDB\TourRepository.cs" />
     <Compile Include="ViewModels\EnquiryTourLeadViewModel.cs" />
     <Compile Include="ViewModels\EnquiryTourLeadViewModel_Old.cs" />
     <Compile Include="Models\Fulltime.cs" />
     <Compile Include="Models\Parttime.cs" />
     <Compile Include="Models\TourLeader.cs" />
-    <Compile Include="Models\Tours.cs" />
+    <Compile Include="Models\Tour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -187,10 +188,11 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\TourLead\Index.cshtml" />
+    <Content Include="Views\Tour\AssignTourLeader.cshtml" />
+    <Content Include="Views\Tour\TourList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Tour\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

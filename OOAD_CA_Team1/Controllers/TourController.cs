@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OOAD_CA_Team1.Models;
-using OOAD_CA_Team1.DAO;
+using OOAD_CA_Team1.TourReservationSysDB;
 using System.Diagnostics;
 
 namespace OOAD_CA_Team1.Controllers
@@ -14,25 +14,21 @@ namespace OOAD_CA_Team1.Controllers
         // GET: Tour
         public ActionResult TourList()
         {
-            List<Tours> tourlist = new List<Tours>();
-            tourlist = TourDAO.GetTourList();
+            List<Tour> tourlist = new List<Tour>();
+            tourlist = TourRepository.GetTourList();
             return View(tourlist);
         }
-        public ActionResult AssignTourLeader(int id)
+        public ActionResult AssignTourLeader(int tid)
         {
+            Tour tourinfo = TourRepository.GetTourInfoById(tid);
+            List<TourLeader> leader_list = new List<TourLeader>();
+            leader_list = TourRepository.GetTourLeaders(tid);
 
-            Tours tourinfo = new Tours();
-            tourinfo = TourDAO.GetTourInfoById(id);
-
-            List<Tourleaders> tl_list = new List<Tourleaders>();
-            tl_list = TourDAO.GetTourLeaderById();
-
-            ViewBag.tl_list = tl_list;
-            ViewBag.tid = id;
+            ViewBag.tl_list = leader_list;
+            ViewBag.tid = tid;
 
             return View(tourinfo);
         }
-
         public ActionResult AssignLeader(int tid)
         {
             int tl_id;
@@ -44,7 +40,7 @@ namespace OOAD_CA_Team1.Controllers
                 if (key == "TourLeader" && Request[key] != "")
                 {
                     tl_id = Convert.ToInt32(Request[key]);
-                    TourDAO.AssignTourleader(tid, tl_id);
+                    TourRepository.AssignTourleader(tid, tl_id);
                 }
             }
                 return RedirectToAction("TourList");

@@ -27,7 +27,6 @@ namespace OOAD_CA_Team1.Controllers
                 ConfigureViewModel(vm);
                 return View(vm);
             }
-
             double cost = 0.0;
             try
             {
@@ -37,7 +36,6 @@ namespace OOAD_CA_Team1.Controllers
             {
                 TempData["msg"] = "<script>alert('Sorry! Fail to calculate cost. Please try again.');</script>";
             }
-
             ConfigureViewModel(vm);
             ViewBag.Cost = cost;
             return View(vm);
