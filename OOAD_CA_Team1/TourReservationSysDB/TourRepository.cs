@@ -50,6 +50,14 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     tours.MinPassenger = Convert.ToInt32(r[7].ToString());
                     tours.MaxPassenger = Convert.ToInt32(r[8].ToString());
                     tours.Status = Convert.ToInt32(r[9].ToString());
+
+                    if (tours.Status == 1)
+                    {
+                        tours.StatusString = "Open";
+                    }
+                    else {
+                        tours.StatusString = "Full";
+                    }
                     tours.TourPackageName = r[10].ToString();
 
                     tourlist.Add(tours);
@@ -138,8 +146,9 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             }
             return tourlist;
         }
-        public static List<TourLeader> GetTourLeaders(int tid)
+        public static List<TourLeader> GetTourLeaders(int tid, int pid)
         {
+
             List<TourLeader> tl_list = new List<TourLeader>();
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();
@@ -153,15 +162,25 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     TourLeader tl = new TourLeader();
                     tl.TourleaderId = Convert.ToInt32(r[0].ToString());
                     tl.Name = Convert.ToString(r[1].ToString());
-                    if (CheckLeader(tid, tl.TourleaderId) )
+                     if (CheckLeader(tid, tl.TourleaderId) )
                     {
-                        tl_list.Add(tl);
+                        if (CheckPt(tl.TourleaderId))
+                        {
+                            if (CheckPtDestination(tl.TourleaderId, pid))
+                            {
+                                tl_list.Add(tl);
+                            }
+                        }
+                        else
+                        {
+                            tl_list.Add(tl);
+                        }
+
                     }
                 }
             }
             return tl_list;
         }
-
         //Wrong One with linq
 
         // to get tour leaders filtered by available dates
@@ -187,7 +206,6 @@ namespace OOAD_CA_Team1.TourReservationSysDB
         //    //var TourLeaders_List = (from tl in TourLeaders where !UnavailableLeaders.Contains(tl.TourleaderId) select tl).ToList();
         //    //return TourLeaders_List;
         //}
-
         public static void AssignTourleader(int tid, int tl_id)
         {
             //bool check = CheckAvailable(tid, tl_id);
@@ -201,19 +219,15 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                 db.SetData(cmd);
             //}
         }
-
-        
         public static bool CheckLeader(int tid, int tl_id)
         {
             bool Isok = true;
             List<Tour> tours = new List<Tour>();
             tours = GetTourListByLeaderId(tl_id);
-
             Tour newtour = new Tour();
             newtour = GetTourInfoById(tid);
             DateTime NewStartDate = Convert.ToDateTime(newtour.StartDate);
             DateTime NewEndDate = Convert.ToDateTime(newtour.EndDate);
-
             if (tours.Count() != 0)
             {
                 foreach (Tour t in tours)
@@ -239,6 +253,55 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                 }
             }
             return Isok;
+        }
+        public static bool CheckPt(int tl_id)
+        {
+            TourLeader tl = new TourLeader();
+            SqlConnection con = new SqlConnection();
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"select count(*) from TourLeaders t, ParttimeLeaders pt  where t.TourLeaderId = pt.TourLeaderId  and t.TourLeaderId = " + tl_id;
+            db.SetData(cmd);
+            DataTable tbl = db.GetData(cmd);
+            if(Convert.ToInt32(tbl.Rows[0][0]) > 0)
+            {
+                return true;
+            }
+            return false; 
+        }
+        public static bool CheckPtDestination(int tl_id, int pid )
+        {
+            string Distination = GetDistination(pid);
+            SqlConnection con = new SqlConnection();
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"select count(*) from ParttimeLeaders where TourLeaderId = "+ tl_id + " and DistinationsOpted like '%"+ Distination + "%' ";
+            db.SetData(cmd);
+            DataTable tbl = db.GetData(cmd);
+            if (Convert.ToInt32(tbl.Rows[0][0]) > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static string GetDistination(int pid)
+        {
+
+            string tolocation = "";
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"select ToLocation from TourPackages where TourPackageId = " + pid;
+            DataTable tbl = db.GetData(cmd);
+
+            if (tbl != null)
+            {
+                tolocation = Convert.ToString(tbl.Rows[0][0]);
+            }
+            return tolocation;
+
         }
 
 

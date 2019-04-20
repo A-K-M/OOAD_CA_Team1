@@ -22,7 +22,7 @@ namespace OOAD_CA_Team1.Controllers
         {
             Tour tourinfo = TourRepository.GetTourInfoById(tid);
             List<TourLeader> leader_list = new List<TourLeader>();
-            leader_list = TourRepository.GetTourLeaders(tid);
+            leader_list = TourRepository.GetTourLeaders(tid, tourinfo.TourPackageId);
 
             ViewBag.tl_list = leader_list;
             ViewBag.tid = tid;
