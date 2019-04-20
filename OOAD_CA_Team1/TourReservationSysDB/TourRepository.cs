@@ -9,7 +9,7 @@ using OOAD_CA_Team1.TourReservationSysDB;
 
 namespace OOAD_CA_Team1.TourReservationSysDB
 {
-    public class TourRepository 
+    public class TourRepository
     {
         public static List<Tour> GetTourList()
         {
@@ -50,14 +50,8 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     tours.MinPassenger = Convert.ToInt32(r[7].ToString());
                     tours.MaxPassenger = Convert.ToInt32(r[8].ToString());
                     tours.Status = Convert.ToInt32(r[9].ToString());
+                    tours.StatusString = ((TourStatus)tours.Status).ToString();
 
-                    if (tours.Status == 1)
-                    {
-                        tours.StatusString = "Open";
-                    }
-                    else {
-                        tours.StatusString = "Full";
-                    }
                     tours.TourPackageName = r[10].ToString();
 
                     tourlist.Add(tours);
@@ -65,13 +59,13 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             }
             return tourlist;
         }
-        
+
         public static Tour GetTourDetailsById(int id)
         {
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"select t.*,p.TourPackageName from Tours t, TourPackages p where t.PackageId = p.TourPackageId and t.tourid ="+id;
+            cmd.CommandText = @"select t.*,p.TourPackageName from Tours t, TourPackages p where t.PackageId = p.TourPackageId and t.tourid =" + id;
 
             Tour tours = new Tour();
             DataTable tbl = db.GetData(cmd);
@@ -131,7 +125,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             }
             return tourlist;
         }
-        
+
         public static string GetDistination(int pid)
         {
 
@@ -148,6 +142,15 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             }
             return tolocation;
 
+        }
+
+        public enum TourStatus
+        {
+            Open = 1,
+            Full = 2,
+            Departed = 3,
+            Completed = 4,
+            Cancelled = 5
         }
 
 
