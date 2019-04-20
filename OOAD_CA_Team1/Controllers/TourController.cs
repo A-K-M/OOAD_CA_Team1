@@ -20,9 +20,9 @@ namespace OOAD_CA_Team1.Controllers
         }
         public ActionResult AssignTourLeader(int tid)
         {
-            Tour tourinfo = TourRepository.GetTourInfoById(tid);
+            Tour tourinfo = TourRepository.GetTourDetailsById(tid);
             List<TourLeader> leader_list = new List<TourLeader>();
-            leader_list = TourRepository.GetTourLeaders(tid, tourinfo.TourPackageId);
+            leader_list = EnquiryTourLeadCostRepository.GetAvailableTourLeaders(tid, tourinfo.TourPackageId);
 
             ViewBag.tl_list = leader_list;
             ViewBag.tid = tid;
@@ -40,7 +40,7 @@ namespace OOAD_CA_Team1.Controllers
                 if (key == "TourLeader" && Request[key] != "")
                 {
                     tl_id = Convert.ToInt32(Request[key]);
-                    TourRepository.AssignTourleader(tid, tl_id);
+                    EnquiryTourLeadCostRepository.AssignTourleader(tid, tl_id);
                 }
             }
                 return RedirectToAction("TourList");

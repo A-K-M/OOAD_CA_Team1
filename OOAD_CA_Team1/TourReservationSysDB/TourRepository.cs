@@ -37,7 +37,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     else
                     {
                         tours.TourLeaderId = Convert.ToInt32(r[5].ToString());
-                        tours.TourLeaderName = TourRepository.GetTourLeaderNameById(tours.TourLeaderId);
+                        tours.TourLeaderName = EnquiryTourLeadCostRepository.GetTourLeaderNameById(tours.TourLeaderId);
                     }
                     if (tbl.Rows[0][6] != null)
                     {
@@ -65,23 +65,8 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             }
             return tourlist;
         }
-        public static string GetTourLeaderNameById(int TourLeaderId) {
-
-            string TourLeaderName = "";
-            DBConnect db = new DBConnect();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"select name from TourLeaders where TourLeaderId = " + TourLeaderId;
-            DataTable tbl = db.GetData(cmd);
-
-            if (tbl != null)
-            {
-                TourLeaderName = Convert.ToString(tbl.Rows[0][0]);
-            }
-            return TourLeaderName;
-
-        }
-        public static Tour GetTourInfoById(int id)
+        
+        public static Tour GetTourDetailsById(int id)
         {
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();
@@ -106,7 +91,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     else
                     {
                         tours.TourLeaderId = Convert.ToInt32(r[5].ToString());
-                        tours.TourLeaderName = TourRepository.GetTourLeaderNameById(tours.TourLeaderId);
+                        tours.TourLeaderName = EnquiryTourLeadCostRepository.GetTourLeaderNameById(tours.TourLeaderId);
                     }
                     if (tbl.Rows[0][6] != null)
                     {
@@ -146,146 +131,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             }
             return tourlist;
         }
-        public static List<TourLeader> GetTourLeaders(int tid, int pid)
-        {
-
-            List<TourLeader> tl_list = new List<TourLeader>();
-            DBConnect db = new DBConnect();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"select * from TourLeaders order by Name";
-            DataTable tbl = db.GetData(cmd);
-            if (tbl != null)
-            {
-                foreach (DataRow r in tbl.Rows)
-                {
-                    TourLeader tl = new TourLeader();
-                    tl.TourleaderId = Convert.ToInt32(r[0].ToString());
-                    tl.Name = Convert.ToString(r[1].ToString());
-                     if (CheckLeader(tid, tl.TourleaderId) )
-                    {
-                        if (CheckPt(tl.TourleaderId))
-                        {
-                            if (CheckPtDestination(tl.TourleaderId, pid))
-                            {
-                                tl_list.Add(tl);
-                            }
-                        }
-                        else
-                        {
-                            tl_list.Add(tl);
-                        }
-
-                    }
-                }
-            }
-            return tl_list;
-        }
-        //Wrong One with linq
-
-        // to get tour leaders filtered by available dates
-        //public static List<TourLeader> GetAavilableTourLeaders(DateTime startDate, DateTime endDate)
-        //{
-        //    List<Tour> tours = GetTourList();
-
-        //    List<int> UnavailableLeaders = tours
-        //                                .Where(tour => (startDate >= tour.StartDate && startDate <= tour.EndDate)
-        //                                && (endDate >= tour.StartDate && endDate <= tour.EndDate))
-        //                                .Select(tour => tour.TourLeaderId)
-        //                                .ToList();
-
-        //    //var UnavailableLeaderIDS = from tour in tours
-        //    //               where(startDate == tour.StartDate) &&
-        //    //               (startDate >= tour.StartDate && startDate <= tour.EndDate)
-        //    //               && (endDate >= tour.StartDate && endDate <= tour.EndDate)
-        //    //               select tour.TourLeaderId;
-
-        //    var list = GetTourLeaders().Where(leader => !UnavailableLeaders.Contains(leader.TourleaderId)).ToList();
-        //    return list;
-        //    //List<TourLeader> TourLeaders = GetTourLeaders();
-        //    //var TourLeaders_List = (from tl in TourLeaders where !UnavailableLeaders.Contains(tl.TourleaderId) select tl).ToList();
-        //    //return TourLeaders_List;
-        //}
-        public static void AssignTourleader(int tid, int tl_id)
-        {
-            //bool check = CheckAvailable(tid, tl_id);
-            //if (check)
-            //{
-                SqlConnection con = new SqlConnection();
-                DBConnect db = new DBConnect();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = @"update tours set TourLeaderId = " + tl_id + " where TourId = " + tid + ";";
-                db.SetData(cmd);
-            //}
-        }
-        public static bool CheckLeader(int tid, int tl_id)
-        {
-            bool Isok = true;
-            List<Tour> tours = new List<Tour>();
-            tours = GetTourListByLeaderId(tl_id);
-            Tour newtour = new Tour();
-            newtour = GetTourInfoById(tid);
-            DateTime NewStartDate = Convert.ToDateTime(newtour.StartDate);
-            DateTime NewEndDate = Convert.ToDateTime(newtour.EndDate);
-            if (tours.Count() != 0)
-            {
-                foreach (Tour t in tours)
-                {
-                    DateTime OldStartDate = Convert.ToDateTime(t.StartDate);
-                    DateTime OldEndDate = Convert.ToDateTime(t.EndDate);
-                    
-                    if (NewStartDate == OldStartDate)
-                    {
-                        Isok = false;
-                        break;
-                    }
-                    else if (NewStartDate > OldStartDate && NewStartDate < OldEndDate)
-                    {
-                        Isok = false;
-                        break;
-                    }
-                    else if (NewEndDate > OldStartDate && NewEndDate < OldEndDate) //just in case
-                    {
-                        Isok = false;
-                        break;
-                    }
-                }
-            }
-            return Isok;
-        }
-        public static bool CheckPt(int tl_id)
-        {
-            TourLeader tl = new TourLeader();
-            SqlConnection con = new SqlConnection();
-            DBConnect db = new DBConnect();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"select count(*) from TourLeaders t, ParttimeLeaders pt  where t.TourLeaderId = pt.TourLeaderId  and t.TourLeaderId = " + tl_id;
-            db.SetData(cmd);
-            DataTable tbl = db.GetData(cmd);
-            if(Convert.ToInt32(tbl.Rows[0][0]) > 0)
-            {
-                return true;
-            }
-            return false; 
-        }
-        public static bool CheckPtDestination(int tl_id, int pid )
-        {
-            string Distination = GetDistination(pid);
-            SqlConnection con = new SqlConnection();
-            DBConnect db = new DBConnect();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"select count(*) from ParttimeLeaders where TourLeaderId = "+ tl_id + " and DistinationsOpted like '%"+ Distination + "%' ";
-            db.SetData(cmd);
-            DataTable tbl = db.GetData(cmd);
-            if (Convert.ToInt32(tbl.Rows[0][0]) > 0)
-            {
-                return true;
-            }
-            return false;
-        }
+        
         public static string GetDistination(int pid)
         {
 
