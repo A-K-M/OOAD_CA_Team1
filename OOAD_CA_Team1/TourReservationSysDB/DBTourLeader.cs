@@ -191,7 +191,8 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"select count(*) from ParttimeLeaders where TourLeaderId = " + tl_id + " and DistinationsOpted like '%" + Distination + "%' ";
+            cmd.CommandText = "select count(*) from ParttimeLeaders where TourLeaderId = " + tl_id + " and (DistinationsOpted like '%," + Distination + ",%' OR  DistinationsOpted like '%," + Distination + "' OR  DistinationsOpted like '" + Distination + ",%' OR  DistinationsOpted like '" + Distination + "')";
+            //cmd.CommandText = @"select count(*) from ParttimeLeaders where TourLeaderId = " + tl_id + " and DistinationsOpted like '%," + Distination + ",%' OR  DistinationsOpted like '%," + Distination + "' OR  DistinationsOpted like '" + Distination + ,"%'";
             db.SetData(cmd);
             DataTable tbl = db.GetData(cmd);
             if (Convert.ToInt32(tbl.Rows[0][0]) > 0)
