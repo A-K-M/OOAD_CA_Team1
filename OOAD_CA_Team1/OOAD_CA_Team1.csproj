@@ -183,7 +183,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\TourLead\Index.cshtml" />
-    <Content Include="Views\Tour\TourDetails.cshtml" />
+    <Content Include="Views\Tour\Details.cshtml" />
     <Content Include="Views\Tour\TourList.cshtml" />
   </ItemGroup>
   <ItemGroup>
