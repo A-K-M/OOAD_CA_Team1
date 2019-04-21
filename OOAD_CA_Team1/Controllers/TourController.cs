@@ -15,14 +15,14 @@ namespace OOAD_CA_Team1.Controllers
         public ActionResult TourList()
         {
             List<Tour> tourlist = new List<Tour>();
-            tourlist = TourRepository.GetTourList();
+            tourlist = DBTour.GetTourList();
             return View(tourlist);
         }
         public ActionResult TourDetails(int tid)
         {
-            Tour tourinfo = TourRepository.GetTourDetailsById(tid);
+            Tour tourinfo = DBTour.GetTourDetailsById(tid);
             List<TourLeader> leader_list = new List<TourLeader>();
-            leader_list = EnquiryTourLeadCostRepository.GetAvailableTourLeaders(tid, tourinfo.TourPackageId);
+            leader_list = DBTourLeader.GetAvailableTourLeaders(tid, tourinfo.TourPackageId);
 
             ViewBag.tl_list = leader_list;
             ViewBag.tid = tid;
@@ -40,13 +40,13 @@ namespace OOAD_CA_Team1.Controllers
                 if (key == "TourLeader" && Request[key] != "")
                 {
                     tl_id = Convert.ToInt32(Request[key]);
-                    EnquiryTourLeadCostRepository.AssignTourleader(tid, tl_id);
+                    DBTourLeader.AssignTourleader(tid, tl_id);
                 }
             }
 
-            Tour tourinfo = TourRepository.GetTourDetailsById(tid);
+            Tour tourinfo = DBTour.GetTourDetailsById(tid);
             List<TourLeader> leader_list = new List<TourLeader>();
-            leader_list = EnquiryTourLeadCostRepository.GetAvailableTourLeaders(tid, tourinfo.TourPackageId);
+            leader_list = DBTourLeader.GetAvailableTourLeaders(tid, tourinfo.TourPackageId);
 
             ViewBag.tl_list = leader_list;
             ViewBag.tid = tid;

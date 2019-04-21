@@ -8,7 +8,7 @@ using System.Web;
 
 namespace OOAD_CA_Team1.TourReservationSysDB
 {
-    public class EnquiryTourLeadCostRepository
+    public class DBTourLeader
     {
         public List<TourLeader> GetTourLeads()
         {
@@ -135,9 +135,9 @@ namespace OOAD_CA_Team1.TourReservationSysDB
         {
             bool Isok = true;
             List<Tour> tours = new List<Tour>();
-            tours = TourRepository.GetTourListByLeaderId(tl_id);
+            tours = DBTour.GetTourListByLeaderId(tl_id);
             Tour newtour = new Tour();
-            newtour = TourRepository.GetTourDetailsById(tid);
+            newtour = DBTour.GetTourDetailsById(tid);
             DateTime NewStartDate = Convert.ToDateTime(newtour.StartDate);
             DateTime NewEndDate = Convert.ToDateTime(newtour.EndDate);
             if (tours.Count() != 0)
@@ -147,17 +147,18 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     DateTime OldStartDate = Convert.ToDateTime(t.StartDate);
                     DateTime OldEndDate = Convert.ToDateTime(t.EndDate);
 
-                    if (NewStartDate == OldStartDate)
+                    //if (NewStartDate == OldStartDate)
+                    //{
+                    //    Isok = false;
+                    //    break;
+                    //}
+                    //else
+                    if (NewStartDate >= OldStartDate && NewStartDate <= OldEndDate)
                     {
                         Isok = false;
                         break;
                     }
-                    else if (NewStartDate > OldStartDate && NewStartDate < OldEndDate)
-                    {
-                        Isok = false;
-                        break;
-                    }
-                    else if (NewEndDate > OldStartDate && NewEndDate < OldEndDate) //just in case
+                    else if (NewEndDate >= OldStartDate && NewEndDate <= OldEndDate) //just in case
                     {
                         Isok = false;
                         break;
@@ -185,7 +186,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
         public static bool CheckPtDestination(int tl_id, int pid)
         {
             
-            string Distination = TourRepository.GetDistination(pid);
+            string Distination = DBTour.GetDistination(pid);
             SqlConnection con = new SqlConnection();
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();

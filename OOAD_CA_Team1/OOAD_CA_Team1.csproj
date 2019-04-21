@@ -138,11 +138,11 @@
     <Compile Include="Controllers\TourController.cs" />
     <Compile Include="CostCalculator.cs" />
     <Compile Include="TourReservationSysDB\DBConnect.cs" />
-    <Compile Include="TourReservationSysDB\EnquiryTourLeadCostRepository.cs" />
+    <Compile Include="TourReservationSysDB\DBTourLeader.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="TourReservationSysDB\TourRepository.cs" />
+    <Compile Include="TourReservationSysDB\DBTour.cs" />
     <Compile Include="ViewModels\TourLeadCostViewModel.cs" />
     <Compile Include="Models\Fulltime.cs" />
     <Compile Include="Models\Parttime.cs" />

@@ -12,7 +12,7 @@ namespace OOAD_CA_Team1
         public static double CalculateTourLeadCost(int tourLeadId, int days)
         {
             double cost = 0.0;
-            var repo = new EnquiryTourLeadCostRepository();
+            var repo = new DBTourLeader();
             var fullTimeLeads = repo.GetFullTimeLeads();
             var partTimeLeads = repo.GetPartTimeLeads();
 

@@ -9,7 +9,7 @@ using OOAD_CA_Team1.TourReservationSysDB;
 
 namespace OOAD_CA_Team1.TourReservationSysDB
 {
-    public class TourRepository
+    public class DBTour
     {
         public static List<Tour> GetTourList()
         {
@@ -37,7 +37,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     else
                     {
                         tours.TourLeaderId = Convert.ToInt32(r[5].ToString());
-                        tours.TourLeaderName = EnquiryTourLeadCostRepository.GetTourLeaderNameById(tours.TourLeaderId);
+                        tours.TourLeaderName = DBTourLeader.GetTourLeaderNameById(tours.TourLeaderId);
                     }
                     if (tbl.Rows[0][6] != null)
                     {
@@ -85,7 +85,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     else
                     {
                         tours.TourLeaderId = Convert.ToInt32(r[5].ToString());
-                        tours.TourLeaderName = EnquiryTourLeadCostRepository.GetTourLeaderNameById(tours.TourLeaderId);
+                        tours.TourLeaderName = DBTourLeader.GetTourLeaderNameById(tours.TourLeaderId);
                     }
                     if (tbl.Rows[0][6] != null)
                     {

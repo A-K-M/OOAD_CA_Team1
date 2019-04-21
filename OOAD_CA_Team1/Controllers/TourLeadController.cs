@@ -43,7 +43,7 @@ namespace OOAD_CA_Team1.Controllers
 
         private void ConfigureViewModel(TourLeadCostViewModel vm)
         {
-            var repo = new EnquiryTourLeadCostRepository();
+            var repo = new DBTourLeader();
             IEnumerable<TourLeader> tourLeads = repo.GetTourLeads();
             foreach(var lead in tourLeads)
             {
