@@ -14,13 +14,17 @@ namespace OOAD_CA_Team1.Controllers
     {
         public ActionResult Index()
         {
+            return RedirectToAction("Cost");
+        }
+        public ActionResult Cost()
+        {
             ModelState.Clear();
             var vm = new TourLeadCostViewModel();
             ConfigureViewModel(vm);
             return View(vm);
         }
         [HttpPost]
-        public ActionResult Index(TourLeadCostViewModel vm)
+        public ActionResult Cost(TourLeadCostViewModel vm)
         {
             if (!ModelState.IsValid)
             {
