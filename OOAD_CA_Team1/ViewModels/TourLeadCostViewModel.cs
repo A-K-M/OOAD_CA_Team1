@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace OOAD_CA_Team1.ViewModels
 {
-    public class EnquiryTourLeadViewModel
+    public class TourLeadCostViewModel
     {
         [Required(ErrorMessage = "Please enter number of days")]
         [Display(Name = "Number of days")]

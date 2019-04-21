@@ -15,12 +15,12 @@ namespace OOAD_CA_Team1.Controllers
         public ActionResult Index()
         {
             ModelState.Clear();
-            var vm = new EnquiryTourLeadViewModel();
+            var vm = new TourLeadCostViewModel();
             ConfigureViewModel(vm);
             return View(vm);
         }
         [HttpPost]
-        public ActionResult Index(EnquiryTourLeadViewModel vm)
+        public ActionResult Index(TourLeadCostViewModel vm)
         {
             if (!ModelState.IsValid)
             {
@@ -41,7 +41,7 @@ namespace OOAD_CA_Team1.Controllers
             return View(vm);
         }
 
-        private void ConfigureViewModel(EnquiryTourLeadViewModel vm)
+        private void ConfigureViewModel(TourLeadCostViewModel vm)
         {
             var repo = new EnquiryTourLeadCostRepository();
             IEnumerable<TourLeader> tourLeads = repo.GetTourLeads();

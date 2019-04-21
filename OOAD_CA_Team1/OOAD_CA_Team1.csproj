@@ -143,7 +143,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="TourReservationSysDB\TourRepository.cs" />
-    <Compile Include="ViewModels\EnquiryTourLeadViewModel.cs" />
+    <Compile Include="ViewModels\TourLeadCostViewModel.cs" />
     <Compile Include="Models\Fulltime.cs" />
     <Compile Include="Models\Parttime.cs" />
     <Compile Include="Models\TourLeader.cs" />
