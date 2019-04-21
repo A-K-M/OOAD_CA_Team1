@@ -18,7 +18,7 @@ namespace OOAD_CA_Team1.Controllers
             tourlist = TourRepository.GetTourList();
             return View(tourlist);
         }
-        public ActionResult AssignTourLeader(int tid)
+        public ActionResult TourDetails(int tid)
         {
             Tour tourinfo = TourRepository.GetTourDetailsById(tid);
             List<TourLeader> leader_list = new List<TourLeader>();
@@ -52,7 +52,7 @@ namespace OOAD_CA_Team1.Controllers
             ViewBag.tid = tid;
             ViewBag.message = "Tour Leader successfully assigned!";
 
-            return View("AssignTourLeader", tourinfo);
+            return View("TourDetails", tourinfo);
             //return RedirectToAction("TourList");
         }
        

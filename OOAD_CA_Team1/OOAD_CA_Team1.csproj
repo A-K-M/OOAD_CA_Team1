@@ -187,7 +187,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\TourLead\Index.cshtml" />
-    <Content Include="Views\Tour\AssignTourLeader.cshtml" />
+    <Content Include="Views\Tour\TourDetails.cshtml" />
     <Content Include="Views\Tour\TourList.cshtml" />
   </ItemGroup>
   <ItemGroup>
