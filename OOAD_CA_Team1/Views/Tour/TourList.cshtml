@@ -70,10 +70,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.MaxPassenger)
         </td>
-
+        @if (Html.DisplayFor(modelItem => item.TourLeaderName).ToString() == "Unassigned")
+        {
+        <td>
+            <span style="color:red">
+                @Html.DisplayFor(modelItem => item.TourLeaderName)
+            </span>
+        </td>
+        }
+        else
+        {
         <td>
             @Html.DisplayFor(modelItem => item.TourLeaderName)
         </td>
+        }
         @*<td>
             @Html.DisplayFor(modelItem => item.TourLeaderCost)
         </td>*@
@@ -88,9 +98,9 @@
         }
         else
         {*@
-            <td>
-                @Html.ActionLink("Details", "Details", new { tid = item.TourId },new { @class="btn btn-primary"})
-            </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { tid = item.TourId }, new { @class = "btn btn-primary" })
+        </td>
         @*}*@
 
     </tr>
