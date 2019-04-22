@@ -10,7 +10,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
 {
     public class DBTourLeader
     {
-        public List<TourLeader> GetTourLeads()
+        public virtual List<TourLeader> GetTourLeads()
         {
             var leads = new List<TourLeader>();
             var db = new DBConnect();
@@ -29,40 +29,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             return leads;
         }
 
-        public List<Fulltime> GetFullTimeLeads()
-        {
-            var db = new DBConnect();
-            var dtLeads = db.GetData(new SqlCommand("SELECT * FROM FulltimeLeaders"));
-            var leads = new List<Fulltime>();
-            for (int i = 0; i < dtLeads.Rows.Count; i++)
-            {
-                var lead = new Fulltime();
-                var row = dtLeads.Rows[i];
-                lead.TourleaderId = Convert.ToInt32(row["TourLeaderId"]);
-                lead.Salary = Convert.ToDouble(row["Salary"]);
-                lead.Rank = row["Rank"].ToString();
-                lead.LeaveEntitled = row["LeaveEntitled"].ToString();
-                leads.Add(lead);
-            }
-            return leads;
-        }
 
-        public List<Parttime> GetPartTimeLeads()
-        {
-            var db = new DBConnect();
-            var dtLeads = db.GetData(new SqlCommand("SELECT * FROM ParttimeLeaders"));
-            var leads = new List<Parttime>();
-            for (int i = 0; i < dtLeads.Rows.Count; i++)
-            {
-                var lead = new Parttime();
-                var row = dtLeads.Rows[i];
-                lead.TourleaderId = Convert.ToInt32(row["TourLeaderId"]);
-                lead.DailySalaryRate = Convert.ToDouble(row["DailySalaryRate"]);
-                lead.DistinationsOpted = row["DistinationsOpted"].ToString();
-                leads.Add(lead);
-            }
-            return leads;
-        }
 
         public static string GetTourLeaderNameById(int TourLeaderId)
         {
@@ -116,8 +83,6 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             }
             return tl_list;
         }
-
-
         public static void AssignTourleader(int tid, int tl_id)
         {
             //bool check = CheckAvailable(tid, tl_id);
@@ -202,5 +167,49 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             return false;
         }
 
+    }
+    public class DBFulltimeTourLeaderList: DBTourLeader
+    {
+        public override List<TourLeader> GetTourLeads()
+        {
+            var db = new DBConnect();
+            var dtLeads = db.GetData(new SqlCommand("SELECT * FROM FulltimeLeaders"));
+            var leads = new List<TourLeader>();
+            foreach (DataRow row in dtLeads.Rows)
+            {
+                var lead = new TourLeader();
+                lead.FulltimeLeader = new Fulltime();
+                lead.FulltimeLeader.TourleaderId = Convert.ToInt32(row[0].ToString());
+                lead.FulltimeLeader.Salary = Convert.ToDouble(row[1].ToString());
+                lead.FulltimeLeader.LeaveEntitled = row[2].ToString();
+                lead.FulltimeLeader.Rank = row[3].ToString();
+                leads.Add(lead);
+            }
+            return leads;
+        }
+    }
+    public class DBParttimeTourLeaderList : DBTourLeader
+    {
+        public override List<TourLeader> GetTourLeads()
+        {
+            var db = new DBConnect();
+            var dtLeads = db.GetData(new SqlCommand("SELECT * FROM ParttimeLeaders"));
+            var leads = new List<TourLeader>();
+
+            foreach (DataRow row in dtLeads.Rows)
+            {
+                var lead = new TourLeader();
+
+                lead.ParttimeLeader = new Parttime();
+                lead.ParttimeLeader.TourleaderId = Convert.ToInt32(row[0].ToString());
+                lead.ParttimeLeader.DailySalaryRate = Convert.ToDouble(row[1].ToString());
+                lead.ParttimeLeader.DistinationsOpted = row[2].ToString();
+
+                leads.Add(lead);
+
+            }
+            
+            return leads;
+        }
     }
 }

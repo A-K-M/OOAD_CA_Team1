@@ -12,13 +12,15 @@ namespace OOAD_CA_Team1
         public static double CalculateTourLeadCost(int tourLeadId, int days)
         {
             double cost = 0.0;
-            var repo = new DBTourLeader();
-            var fullTimeLeads = repo.GetFullTimeLeads();
-            var partTimeLeads = repo.GetPartTimeLeads();
+            //var repo = new DBTourLeader();
+            var fulltimeRepo = new DBFulltimeTourLeaderList();
+            var parttimeRepo = new DBParttimeTourLeaderList();
+            var fulltimeLeads = fulltimeRepo.GetTourLeads();
+            var partTimeLeads = parttimeRepo.GetTourLeads();
 
-            if (GetTourLeadType(fullTimeLeads, tourLeadId) == TourLeadType.FullTime)
+            if (GetTourLeadType(fulltimeLeads, tourLeadId) == TourLeadType.FullTime)
             {
-                var tourLeadRank = fullTimeLeads.Find(l => l.TourleaderId == tourLeadId).Rank;   // GetTourLeadRank
+                var tourLeadRank = fulltimeLeads.Find(l => l.FulltimeLeader.TourleaderId == tourLeadId).FulltimeLeader.Rank;   // GetTourLeadRank
                 double dailyRate = 0.0;
                 switch (tourLeadRank)
                 {
@@ -35,7 +37,7 @@ namespace OOAD_CA_Team1
             }
             else
             {
-                cost = CalcCost(partTimeLeads.SingleOrDefault(l => l.TourleaderId == tourLeadId).DailySalaryRate, days);
+                cost = CalcCost(partTimeLeads.SingleOrDefault(l => l.ParttimeLeader.TourleaderId == tourLeadId).ParttimeLeader.DailySalaryRate, days);
             }
             return cost;
         }
@@ -45,9 +47,9 @@ namespace OOAD_CA_Team1
             return dailyRate * days;
         }
 
-        private static TourLeadType GetTourLeadType(List<Fulltime> fullTimeLeads, int tourLeadId)
+        private static TourLeadType GetTourLeadType(List<TourLeader> fulltimeLeads, int tourLeadId)
         {
-            return fullTimeLeads.Exists(l => l.TourleaderId == tourLeadId) ? TourLeadType.FullTime : TourLeadType.PartTime;
+            return fulltimeLeads.Exists(l => l.FulltimeLeader.TourleaderId == tourLeadId) ? TourLeadType.FullTime : TourLeadType.PartTime;
         }
     }
 

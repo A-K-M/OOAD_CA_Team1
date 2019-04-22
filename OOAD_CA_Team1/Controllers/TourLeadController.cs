@@ -36,7 +36,7 @@ namespace OOAD_CA_Team1.Controllers
             {
                 cost = CostCalculator.CalculateTourLeadCost(vm.SelectedTourLead, Convert.ToInt32(vm.NoOfDays));
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 TempData["msg"] = "<script>alert('Sorry! Fail to calculate cost. Please try again.');</script>";
             }
