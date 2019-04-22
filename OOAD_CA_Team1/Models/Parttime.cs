@@ -9,5 +9,10 @@ namespace OOAD_CA_Team1.Models
     {
         public double DailySalaryRate { get; set; }
         public string DistinationsOpted { get; set; }
+
+        public override double GetDailyRate()
+        {
+            return DailySalaryRate;
+        }
     }
 }
