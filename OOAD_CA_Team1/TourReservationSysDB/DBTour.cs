@@ -98,6 +98,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
                     tours.MinPassenger = Convert.ToInt32(r[7].ToString());
                     tours.MaxPassenger = Convert.ToInt32(r[8].ToString());
                     tours.Status = Convert.ToInt32(r[9].ToString());
+                    tours.StatusString = ((TourStatus)tours.Status).ToString();
                     tours.TourPackageName = r[10].ToString();
                 }
             }

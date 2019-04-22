@@ -1,4 +1,5 @@
 ﻿@model OOAD_CA_Team1.Models.Tour
+@using OOAD_CA_Team1.TourReservationSysDB;
 
 
 @{
@@ -75,7 +76,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Status)
+            @Html.DisplayFor(model => model.StatusString)
         </dd>
 
         <dt>
@@ -89,16 +90,32 @@
         <dt>
             @Html.DisplayNameFor(model => model.TourLeaderName)
         </dt>
+
         @using (Html.BeginForm("AssignLeader", "Tour", FormMethod.Post))
         {
-        <dd>
-            @Html.DropDownList("TourLeader", new SelectList(ViewBag.tl_list, "TourLeaderID", "Name",Model.TourLeaderId), "Select TourLeader")
-            @*@foreach (var leader in ViewBag.tl_list)
+            if (Model.Status == (int)DBTour.TourStatus.Full || Model.Status == (int)DBTour.TourStatus.Open)
             {
-            }*@
-            <input type="submit" name="AssignLeader" value="Assign Leader" class="btn btn-success" formaction="/Tour/AssignLeader?tid=@tid" />
+                <dd>
+                    @Html.DropDownList("TourLeader", new SelectList(ViewBag.tl_list, "TourLeaderID", "Name", Model.TourLeaderId), "Select TourLeader")
+                    @*@foreach (var leader in ViewBag.tl_list)
+                    {
+                    }*@
+                    <input type="submit" name="AssignLeader" value="Assign Leader" class="btn btn-success" formaction="/Tour/AssignLeader?tid=@tid" />
 
-        </dd>
+                </dd>
+            }
+            else
+            {
+                <dd>
+                    @Html.DropDownList("TourLeader", new SelectList(ViewBag.tl_list, "TourLeaderID", "Name", Model.TourLeaderId), "Select TourLeader", new { @disabled = "disabled" })
+                    @*@foreach (var leader in ViewBag.tl_list)
+                    {
+                    }*@
+                    <input type="submit" name="AssignLeader" value="Assign Leader" class="btn btn-success" disabled="disabled" formaction="/Tour/AssignLeader?tid=@tid" />
+
+                </dd>
+            }
+
         }
     </dl>
 </div>
