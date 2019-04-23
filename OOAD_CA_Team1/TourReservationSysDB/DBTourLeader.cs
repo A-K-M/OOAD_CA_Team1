@@ -29,8 +29,6 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             return leads;
         }
 
-
-
         public static string GetTourLeaderNameById(int TourLeaderId)
         {
 
@@ -107,7 +105,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             DateTime NewEndDate = Convert.ToDateTime(newtour.EndDate);
             if (tours.Count() != 0)
             {
-                foreach (Tour t in tours.Where(x=>x.TourId!=tid))
+                foreach (Tour t in tours.Where(x => x.TourId != tid))
                 {
                     DateTime OldStartDate = Convert.ToDateTime(t.StartDate);
                     DateTime OldEndDate = Convert.ToDateTime(t.EndDate);
@@ -150,7 +148,7 @@ namespace OOAD_CA_Team1.TourReservationSysDB
         }
         public static bool CheckPtDestination(int tl_id, int pid)
         {
-            
+
             string Distination = DBTour.GetDistination(pid);
             SqlConnection con = new SqlConnection();
             DBConnect db = new DBConnect();
@@ -166,10 +164,9 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             }
             return false;
         }
-
-       
     }
-    public class DBFulltimeTourLeaderList: DBTourLeader
+
+    public class DBFulltimeTourLeaderList : DBTourLeader
     {
         public override List<TourLeader> GetTourLeads()
         {
@@ -178,12 +175,11 @@ namespace OOAD_CA_Team1.TourReservationSysDB
             var leads = new List<TourLeader>();
             foreach (DataRow row in dtLeads.Rows)
             {
-                var lead = new TourLeader();
-                lead.FulltimeLeader = new Fulltime();
-                lead.FulltimeLeader.TourleaderId = Convert.ToInt32(row[0].ToString());
-                lead.FulltimeLeader.Salary = Convert.ToDouble(row[1].ToString());
-                lead.FulltimeLeader.LeaveEntitled = row[2].ToString();
-                lead.FulltimeLeader.Rank = row[3].ToString();
+                var lead = new Fulltime();
+                lead.TourleaderId = Convert.ToInt32(row[0].ToString());
+                lead.Salary = Convert.ToDouble(row[1].ToString());
+                lead.LeaveEntitled = row[2].ToString();
+                lead.Rank = row[3].ToString();
                 leads.Add(lead);
             }
             return leads;
@@ -199,17 +195,12 @@ namespace OOAD_CA_Team1.TourReservationSysDB
 
             foreach (DataRow row in dtLeads.Rows)
             {
-                var lead = new TourLeader();
-
-                lead.ParttimeLeader = new Parttime();
-                lead.ParttimeLeader.TourleaderId = Convert.ToInt32(row[0].ToString());
-                lead.ParttimeLeader.DailySalaryRate = Convert.ToDouble(row[1].ToString());
-                lead.ParttimeLeader.DistinationsOpted = row[2].ToString();
-
+                var lead = new Parttime();
+                lead.TourleaderId = Convert.ToInt32(row[0].ToString());
+                lead.DailySalaryRate = Convert.ToDouble(row[1].ToString());
+                lead.DistinationsOpted = row[2].ToString();
                 leads.Add(lead);
-
             }
-            
             return leads;
         }
     }
