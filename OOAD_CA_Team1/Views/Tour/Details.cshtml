@@ -111,7 +111,7 @@
                     @*@foreach (var leader in ViewBag.tl_list)
                     {
                     }*@
-                    <input type="submit" name="AssignLeader" value="Assign Leader" class="btn btn-success" disabled="disabled" formaction="/Tour/AssignLeader?tid=@tid" />
+                    <input type="submit" name="AssignLeader" value="Assign Leader" class="btn btn-success" disabled="disabled" title="Tour is Departed! Can't Assign Leader" formaction="/Tour/AssignLeader?tid=@tid" />
 
                 </dd>
             }

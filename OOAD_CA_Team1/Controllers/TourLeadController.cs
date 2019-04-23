@@ -44,7 +44,6 @@ namespace OOAD_CA_Team1.Controllers
             ViewBag.Cost = cost;
             return View(vm);
         }
-
         private void ConfigureViewModel(TourLeadCostViewModel vm)
         {
             var repo = new DBTourLeader();
