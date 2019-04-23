@@ -36,7 +36,7 @@ namespace OOAD_CA_Team1.Models
         public string TourLeaderName { get; set; }
         public string StatusString { get; set; }
 
-        public TourPackage Package { get; set; }
+     
 
     
 
